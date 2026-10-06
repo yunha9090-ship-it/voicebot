@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI HUB 화면 시안</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F5F4EF;color:#17181C;font-family:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:15px;line-height:1.5}
+button{font-family:inherit;cursor:pointer}
+a{color:#1F35A8}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.muted{color:#5B5F6B}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:16px;padding:14px 24px;background:#fff;border-bottom:1px solid #E4E2DA}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.logo b{width:32px;height:32px;border-radius:8px;background:#17181C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.search{flex:1 1 280px;max-width:640px;display:flex;align-items:center;gap:10px;background:#F5F4EF;border:1px solid #E4E2DA;border-radius:10px;padding:0 14px;min-height:44px}
+.search input{flex:1;border:0;background:transparent;font:inherit;outline:none;min-width:0}
+.kbd{font-size:12px;color:#5B5F6B;border:1px solid #D6D3C9;border-radius:4px;padding:1px 6px}
+.spacer{flex:1 1 0}
+.btn-primary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:10px;background:#2F4BD8;color:#fff;font-weight:600;font-size:15px}
+.wrap{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px;padding:24px;max-width:1440px;margin:0 auto}
+nav{flex:1 1 220px;max-width:100%;display:flex;flex-direction:column;gap:4px}
+.nav{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:0 12px;border:0;border-radius:8px;font-size:15px;text-align:left;background:transparent;color:#3F424B;font-weight:500}
+.nav.on{background:#E3E7FB;color:#1F35A8;font-weight:700}
+.nav span{flex:1}
+.count{font-size:12px;font-weight:600;background:#fff;border:1px solid #D6D3C9;border-radius:999px;padding:0 8px;color:#3F424B}
+.sync{margin-top:20px;padding:14px;border:1px solid #E4E2DA;border-radius:10px;background:#fff;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.bar{height:6px;border-radius:3px;background:#ECEAE3;overflow:hidden}.bar i{display:block;height:100%;background:#2F4BD8}
+main{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:24px}
+h1{margin:0;font-size:26px;line-height:1.3;letter-spacing:-.02em}
+h2{margin:0;font-size:18px}
+p{margin:0}
+.cols{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+.colmain{flex:999 1 460px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.rail{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.box{background:#fff;border:1px solid #E4E2DA;border-radius:12px}
+.pad{padding:18px;display:flex;flex-direction:column;gap:10px}
+.card{background:#fff;border:1px solid #E4E2DA;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.card.low{border-color:#EBC982}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:600;font-size:14px;padding:3px 10px;border-radius:6px;white-space:nowrap}
+.b1{background:#FDE1D6;color:#A12F0B}.b3{background:#FFEDC7;color:#6E4700}.b9{background:#ECEAE3;color:#3F424B}
+.req{font-size:12px;font-weight:600;color:#A12F0B;border:1px solid #F2C3B3;border-radius:999px;padding:2px 10px}
+.tag{background:#ECEAE3;border-radius:6px;padding:1px 8px;font-size:13px}
+.quote{background:#F5F4EF;border-radius:8px;padding:12px 14px}
+.quote small{display:block;font-size:12px;font-weight:600;color:#5B5F6B}
+mark{background:#FFE7A3;color:#17181C;padding:0 2px;border-radius:3px}
+.warn{display:flex;gap:8px;font-size:14px;color:#7A4F00;background:#FFF4DC;border-radius:8px;padding:8px 12px}
+.btn{min-height:40px;padding:0 14px;border:1px solid #D6D3C9;border-radius:8px;background:#fff;color:#17181C;font-size:14px;font-weight:600}
+.btn-dark{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:8px;background:#17181C;color:#fff;font-size:14px;font-weight:600;text-decoration:none;border:0}
+.link{border:0;background:transparent;color:#1F35A8;font-size:14px;font-weight:600;min-height:44px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.day{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;border-radius:8px;color:#3F424B;font-size:12px}
+.day b{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:15px}
+.day.today{background:#17181C;color:#fff}
+.dot{width:6px;height:6px;border-radius:50%}
+.later{display:flex;align-items:center;gap:12px;min-height:52px;padding:6px 8px;margin:0 -8px;border:0;border-radius:8px;background:transparent;text-align:left;font-size:14px;color:#17181C}
+.later:hover{background:#F5F4EF}
+.sugg{border:1px solid #E4E2DA;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.chip{min-height:40px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:600;background:#fff;color:#3F424B;border:1px solid #D6D3C9}
+.chip.on{background:#17181C;color:#fff;border-color:#17181C}
+.tablebox{overflow-x:auto}
+table{width:100%;min-width:760px;border-collapse:collapse;font-size:14px}
+th{text-align:left;padding:12px 16px;font-weight:600;font-size:13px;color:#5B5F6B;border-bottom:1px solid #E4E2DA}
+td{padding:14px 16px;border-bottom:1px solid #EFEDE6}
+.task{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #EFEDE6}
+.check{flex:0 0 auto;width:28px;height:28px;margin:8px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0;background:#fff;border:2px solid #B5B2A8}
+.check.on{background:#2F4BD8;border-color:#2F4BD8}
+.done{color:#8A8D96;text-decoration:line-through}
+.pill{font-size:12px;color:#5B5F6B;border:1px solid #E4E2DA;border-radius:999px;padding:1px 8px;white-space:nowrap}
+.setrow{display:flex;align-items:center;gap:14px;padding:16px;border-bottom:1px solid #EFEDE6;flex-wrap:wrap}
+.switch{position:relative;flex:0 0 auto;width:48px;height:28px;border:0;border-radius:999px;padding:0;background:#C9C6BC}
+.switch i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .15s}
+.switch.on{background:#2F4BD8}.switch.on i{left:23px}
+.status{font-size:13px;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.ok{background:#E1F2E6;color:#1F6B3A}.no{background:#FDE1D6;color:#A12F0B}
+.backdrop{position:fixed;inset:0;background:rgba(23,24,28,.32);z-index:10}
+.panel{position:fixed;top:0;right:0;bottom:0;width:440px;max-width:100%;background:#fff;z-index:11;box-shadow:-8px 0 32px rgba(23,24,28,.16);overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+.info{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px 12px;padding:14px;font-size:14px}
+.x{width:44px;height:44px;border:0;border-radius:8px;background:#F5F4EF;font-size:20px}
+.hidden{display:none}
+.onb{max-width:720px;margin:24px auto;display:flex;flex-direction:column;gap:20px}
+.steps{display:flex;gap:8px}.steps i{flex:1;height:4px;border-radius:2px;background:#E4E2DA}.steps i.on{background:#2F4BD8}
+.scan{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #EFEDE6}
+.scan .st{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto;background:#ECEAE3;color:#8A8D96}
+.scan .st.run{background:#E3E7FB;color:#1F35A8}.scan .st.ok{background:#2F4BD8;color:#fff}
+.btn-big{min-height:48px;padding:0 20px;border:0;border-radius:10px;background:#2F4BD8;color:#fff;font-weight:700;font-size:16px}
+.btn-big:disabled{background:#C9C6BC;cursor:not-allowed}
+.answer{background:#fff;border:1px solid #C9D2F6;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.ai{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#1F35A8;background:#E3E7FB;border-radius:999px;padding:2px 10px;align-self:flex-start}
+.mback{position:fixed;inset:0;background:rgba(23,24,28,.4);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:#fff;border-radius:14px;width:560px;max-width:100%;max-height:calc(100vh - 32px);overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.drop{border:2px dashed #C9C6BC;border-radius:12px;padding:32px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;background:#FAF9F6}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:#3F424B}
+.field input,.field select{font:inherit;font-size:15px;font-weight:400;color:#17181C;min-height:42px;padding:0 12px;border:1px solid #D6D3C9;border-radius:8px;background:#fff}
+.spin{width:36px;height:36px;border-radius:50%;border:4px solid #E3E7FB;border-top-color:#2F4BD8;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#17181C;color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;z-index:30;box-shadow:0 6px 24px rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><b class="mono">AI</b>AI HUB</div>
+  <label class="search"><span aria-hidden="true">⌕</span><input id="q" type="search" aria-label="자료 검색" placeholder="“생화학 과제 언제까지야?”처럼 물어보세요"><span class="kbd mono">Enter</span></label>
+  <div class="spacer"></div>
+  <button class="btn-primary" type="button" data-upload="1">+ 직접 업로드</button>
+</header>
+<div class="wrap">
+  <nav aria-label="주 메뉴" id="nav"></nav>
+  <main id="main"></main>
+</div>
+<div id="panel"></div>
+<div id="modal"></div>
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script>
+var S = { screen:'dash', sel:null, src:'all', scope:'school', done:{t5:true}, sugg:{},
+  onb:1, scan:0, q:'', up:null, upName:'', extra:[],
+  conn:{gmail:true,drive:true,eclass:false,upload:true}, alert:{d3:true,d1:true,morning:false} };
+var srcNames = {gmail:'Gmail',drive:'Drive',eclass:'e-Class',upload:'직접 업로드'};
+var D = [
+ {id:'a1',d:1,title:"'생화학으로 읽는 몸과 세계' 중간 과제 제출",req:true,srcLabel:'Gmail · 학교 메일',cat:'대학교/과제',pre:'이번 중간 과제는 ',hl:'10월 7일 자정',post:'까지 e-Class 과제함으로 제출해 주세요.',due:'10월 7일 (수) 23:59',how:'e-Class 과제함 업로드',conf:96,from:'생화학 담당 교수',recv:'10월 2일'},
+ {id:'a2',d:2,title:'딥러닝 팀 과제 중간 발표 자료 업로드',req:true,srcLabel:'e-Class · 공지',cat:'대학교/과제',pre:'중간 발표는 목요일 수업 시간에 진행하며, 발표 자료는 ',hl:'10월 8일 오전 9시',post:'까지 팀 게시판에 올려 주세요.',due:'10월 8일 (목) 09:00',how:'e-Class 팀 게시판',conf:93,from:'딥러닝 수업 공지',recv:'9월 30일'},
+ {id:'a3',d:3,title:"'AI Chaos Lab' QA 테스팅 기획안 제출",req:true,srcLabel:'Drive · PDF',cat:'공모전/프로젝트',pre:'본선 진출팀은 시스템 엣지 케이스 검증 계획을 ',hl:'다음 주 금요일',post:'까지 운영사무국 메일로 보내 주세요.',due:'10월 9일 (금) · 추정',how:'운영사무국 이메일',conf:71,low:true,from:'AI_Chaos_Lab_본선안내.pdf',recv:'10월 1일'},
+ {id:'a4',d:9,title:'2학기 성적우수 장학금 신청서 제출',req:false,srcLabel:'Gmail · 학교 메일',cat:'행정/장학',pre:'신청서와 증빙 서류는 ',hl:'10월 15일 17시',post:'까지 학생지원팀에 방문 제출합니다.',due:'10월 15일 (목) 17:00',how:'학생지원팀 방문 제출',conf:95,from:'학생지원팀',recv:'9월 29일'},
+ {id:'a5',d:10,title:'교내 해커톤 참가 신청',req:false,srcLabel:'Drive · 문서',cat:'공모전/프로젝트',pre:'참가 신청은 ',hl:'10월 16일 18시',post:'에 마감되며 팀 단위로 접수합니다.',due:'10월 16일 (금) 18:00',how:'신청 폼 제출',conf:94,from:'교내 해커톤 모집 요강.docx',recv:'9월 28일'}
+];
+var FILES = [
+ {name:'[생화학] 중간 과제 안내',src:'gmail',cat:'대학교/과제',date:'10.02',sum:'제출 기한·분량·형식 안내',d:1},
+ {name:'딥러닝 중간 발표 공지',src:'eclass',cat:'대학교/과제',date:'09.30',sum:'발표 순서와 자료 업로드 기한',d:2},
+ {name:'AI_Chaos_Lab_본선안내.pdf',src:'drive',cat:'공모전/프로젝트',date:'10.01',sum:'본선 일정, 기획안 제출 요건',d:3},
+ {name:'팀플 회의록_1005.md',src:'upload',cat:'대학교/과제',date:'10.05',sum:'역할 분담, 다음 회의는 목요일',d:0},
+ {name:'성적우수 장학금 신청 안내',src:'gmail',cat:'행정/장학',date:'09.29',sum:'신청 자격과 필요 서류 3종',d:9},
+ {name:'교내 해커톤 모집 요강.docx',src:'drive',cat:'공모전/프로젝트',date:'09.28',sum:'팀 구성 2–4인, 신청 방법',d:10},
+ {name:'알고리즘 6주차 강의자료.pdf',src:'eclass',cat:'대학교/강의자료',date:'09.28',sum:'정렬 알고리즘 비교, 과제 없음',d:0},
+ {name:'도서관 대출 연체 안내',src:'gmail',cat:'기타',date:'09.27',sum:'반납 기한 지남, 할 일 후보로 제안',d:0}
+];
+var SUGG = [
+ {id:'s1',title:'알고리즘 7주차 퀴즈 대비',src:'e-Class 공지 · “다음 주 화요일 수업 중 퀴즈가 있습니다”'},
+ {id:'s2',title:'도서관 대출 도서 반납',src:'Gmail · 반납 기한이 지났다는 안내'}
+];
+function tasks(){
+  var t=[
+   {id:'t1',title:"'생화학으로 읽는 몸과 세계' 중간 과제 제출",d:1,origin:'AI 추출',meta:'10월 7일 (수) 23:59 · e-Class'},
+   {id:'t2',title:'딥러닝 중간 발표 자료 업로드',d:2,origin:'AI 추출',meta:'10월 8일 (목) 09:00 · 팀 게시판'},
+   {id:'t3',title:'AI Chaos Lab QA 기획안 제출',d:3,origin:'AI 추출',meta:'10월 9일 (금) · 날짜 확인 필요'},
+   {id:'t5',title:'팀플 역할 분담표 공유',d:0,origin:'직접 추가',meta:'오늘 · 팀플 회의록_1005.md'},
+   {id:'t4',title:'성적우수 장학금 신청서 제출',d:9,origin:'AI 추출',meta:'10월 15일 (목) 17:00 · 방문 제출'},
+   {id:'t6',title:'교내 해커톤 참가 신청',d:10,origin:'AI 추출',meta:'10월 16일 (금) 18:00'}];
+  if(S.sugg.s1==='ok') t.push({id:'t7',title:'알고리즘 7주차 퀴즈 대비',d:7,origin:'AI 후보',meta:'10월 13일 (화) 수업 중'});
+  return t.concat(S.extra);
+}
+function bc(d){return d<=1?'b1':d<=3?'b3':'b9';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function set(p){Object.assign(S,p);render();}
+
+function renderNav(){
+  var open=tasks().filter(function(t){return !S.done[t.id];}).length;
+  var items=[['dash','대시보드',''],['files','전체 자료',String(FILES.length)],['todo','해야 할 일',String(open)],['settings','연결 및 설정','']];
+  document.getElementById('nav').innerHTML = items.map(function(n){
+    return '<button type="button" class="nav'+(S.screen===n[0]?' on':'')+'" data-go="'+n[0]+'"><span>'+n[1]+'</span>'+(n[2]?'<em class="count mono" style="font-style:normal">'+n[2]+'</em>':'')+'</button>';
+  }).join('') + '<div class="sync"><b style="color:#3F424B">동기화 상태</b><span class="muted">마지막 분석 5분 전 · 새 자료 2건</span><div class="bar"><i style="width:75%"></i></div><span class="muted" style="font-size:12px">연결 3 / 4</span><button type="button" class="link" style="min-height:32px;padding:0;text-align:left;font-size:13px" data-reonb="1">온보딩 다시 보기</button></div>';
+}
+
+function card(x){
+  return '<article class="card'+(x.low?' low':'')+'">'+
+   '<div class="row" style="align-items:flex-start"><span class="badge '+bc(x.d)+'">D-'+x.d+'</span><h3 style="margin:0;flex:1 1 240px;font-size:17px;line-height:1.4">'+esc(x.title)+'</h3>'+(x.req?'<span class="req">필수</span>':'')+'</div>'+
+   '<div class="row" style="font-size:14px;color:#3F424B"><span>'+x.srcLabel+'</span><span style="color:#B5B2A8">·</span><span class="tag">'+x.cat+'</span><span style="color:#B5B2A8">·</span><span>'+x.due+'</span></div>'+
+   '<div class="quote"><small>AI 근거</small>“'+x.pre+'<mark>'+x.hl+'</mark>'+x.post+'”</div>'+
+   (x.low?'<div class="warn">⚠ “다음 주 금요일” 같은 상대 날짜라 정확하지 않을 수 있어요. 원문을 확인해 주세요.</div>':'')+
+   '<div class="row"><span class="muted" style="font-size:13px;flex:1 1 auto">추출 신뢰도 '+x.conf+'%</span><button type="button" class="btn" data-open="'+x.id+'">근거 자세히</button><a class="btn-dark" href="#" onclick="return false">원문 확인 ↗</a></div>'+
+  '</article>';
+}
+
+function dash(){
+  var week=[['월',5],['화',6],['수',7],['목',8],['금',9],['토',10],['일',11]].map(function(w){
+    var c=w[1]===7?'#C2410C':(w[1]===8||w[1]===9)?'#D99A00':'transparent';
+    return '<div class="day'+(w[1]===6?' today':'')+'">'+w[0]+'<b>'+w[1]+'</b><span class="dot" style="background:'+c+'"></span></div>';
+  }).join('');
+  var sugg=SUGG.filter(function(s){return S.sugg[s.id]!=='no';}).map(function(s){
+    var st=S.sugg[s.id];
+    return '<div class="sugg"><b style="font-size:14px">'+s.title+'</b><span class="muted" style="font-size:13px">'+s.src+'</span>'+
+     (st==='ok'?'<span style="font-size:13px;font-weight:600;color:#1F6B3A">할 일에 추가됨</span>':
+     '<div style="display:flex;gap:8px"><button type="button" class="btn" style="flex:1;border:0;background:#E3E7FB;color:#1F35A8" data-sugg="'+s.id+':ok">할 일에 추가</button><button type="button" class="btn" style="font-weight:400" data-sugg="'+s.id+':no">무시</button></div>')+'</div>';
+  }).join('') || '<span class="muted" style="font-size:13px">검토할 후보가 없어요.</span>';
+  return '<section style="display:flex;flex-direction:column;gap:6px"><div class="mono muted" style="font-size:13px">2026.10.06 TUE</div><h1 style="font-size:28px">이번 주 마감 3건, 그중 1건은 날짜 확인이 필요해요</h1><p class="muted">메일·드라이브·e-Class에서 마감일을 찾아 정리했어요. 카드를 누르면 AI가 어떤 문장을 근거로 판단했는지 볼 수 있어요.</p></section>'+
+   '<div class="cols"><section class="colmain"><div class="row" style="justify-content:space-between"><h2>지금 처리해야 할 D-Day</h2><button type="button" class="link" data-go="todo">전체 보기 →</button></div>'+
+   D.filter(function(x){return x.d<=3;}).map(card).join('')+'</section>'+
+   '<aside class="rail"><section class="box pad"><h2 style="font-size:16px">이번 주</h2><div class="week">'+week+'</div><span class="muted" style="font-size:13px">목·금에 마감이 몰려 있어요.</span></section>'+
+   '<section class="box pad" style="gap:4px"><h2 style="font-size:16px;margin-bottom:6px">다가오는 마감</h2>'+
+   D.filter(function(x){return x.d>3;}).map(function(x){return '<button type="button" class="later" data-open="'+x.id+'"><span class="mono" style="font-weight:600;font-size:13px;color:#3F424B;width:44px">D-'+x.d+'</span><span style="flex:1">'+esc(x.title)+'</span></button>';}).join('')+'</section>'+
+   '<section class="box pad"><h2 style="font-size:16px">AI가 찾은 할 일 후보</h2><p class="muted" style="font-size:13px">마감은 없지만 할 일로 보이는 문장이에요.</p>'+sugg+'</section></aside></div>';
+}
+
+function files(){
+  var chips=[['all','전체'],['gmail','Gmail'],['drive','Drive'],['eclass','e-Class'],['upload','직접 업로드']].map(function(c){
+    var n=c[0]==='all'?FILES.length:FILES.filter(function(f){return f.src===c[0];}).length;
+    return '<button type="button" class="chip'+(S.src===c[0]?' on':'')+'" aria-pressed="'+(S.src===c[0])+'" data-src="'+c[0]+'">'+c[1]+' <span class="mono" style="font-size:12px;opacity:.8">'+n+'</span></button>';
+  }).join('');
+  var rows=FILES.filter(function(f){return S.src==='all'||f.src===S.src;}).map(function(f){
+    return '<tr><td style="font-weight:600">'+esc(f.name)+'</td><td style="white-space:nowrap;color:#3F424B">'+srcNames[f.src]+'</td><td style="white-space:nowrap"><span class="tag">'+f.cat+'</span></td><td style="color:#3F424B">'+f.sum+'</td><td class="mono muted">'+f.date+'</td><td>'+(f.d?'<span class="badge '+bc(f.d)+'">D-'+f.d+'</span>':'<span style="font-size:13px;color:#8A8D96">없음</span>')+'</td></tr>';
+  }).join('');
+  return '<section style="display:flex;flex-direction:column;gap:6px"><h1>전체 자료</h1><p class="muted">연결된 곳에서 가져온 자료를 AI가 분류하고 한 줄로 요약했어요. 마감이 있으면 D-Day로 연결돼요.</p></section>'+
+   '<div class="row" role="group" aria-label="출처 필터">'+chips+'</div>'+
+   '<div class="box tablebox"><table><thead><tr><th>자료</th><th>출처</th><th>분류</th><th>AI 요약</th><th>받은 날</th><th>마감</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+function todo(){
+  var t=tasks();
+  var doneN=t.filter(function(x){return S.done[x.id];}).length;
+  function item(x){
+    var on=!!S.done[x.id];
+    return '<div class="task"><button type="button" class="check'+(on?' on':'')+'" aria-pressed="'+on+'" aria-label="완료 표시" data-done="'+x.id+'">'+(on?'<span style="color:#fff;font-weight:700">✓</span>':'')+'</button>'+
+     '<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-weight:600" class="'+(on?'done':'')+'">'+esc(x.title)+'</span><span class="muted" style="font-size:13px">'+x.meta+'</span></div>'+
+     '<span class="pill">'+x.origin+'</span><span class="badge '+(x.d===0?'b1':bc(x.d))+'">'+(x.d===0?'오늘':'D-'+x.d)+'</span></div>';
+  }
+  function grp(label,list){return '<section style="display:flex;flex-direction:column;gap:8px"><h2 style="font-size:15px;color:#3F424B;margin-top:8px">'+label+'</h2><div class="box" style="overflow:hidden">'+list.map(item).join('')+'</div></section>';}
+  return '<div style="display:flex;flex-direction:column;gap:18px;max-width:820px"><section style="display:flex;flex-direction:column;gap:6px"><h1>해야 할 일</h1><p class="muted">AI가 찾은 마감과 직접 추가한 일을 한곳에서 체크해요. '+doneN+'개 완료.</p></section>'+
+   grp('이번 주',t.filter(function(x){return x.d<=5;}))+grp('다음 주',t.filter(function(x){return x.d>5;}))+
+   '<button type="button" class="btn" style="align-self:flex-start;min-height:44px;border-style:dashed;background:transparent">+ 할 일 직접 추가</button></div>';
+}
+
+function settings(){
+  var conns=[['gmail','Gmail (학교 메일)','받은편지함에서 과제·공지 메일만 읽어요'],['drive','Google Drive','지정한 폴더의 PDF·문서를 분석해요'],['eclass','e-Class','수강 과목 공지와 과제 게시판을 가져와요'],['upload','직접 업로드','파일을 올리면 같은 방식으로 분류해요']].map(function(c){
+    var on=!!S.conn[c[0]];
+    return '<div class="setrow"><div style="flex:1 1 240px;min-width:0;display:flex;flex-direction:column"><b>'+c[1]+'</b><span class="muted" style="font-size:13px">'+c[2]+'</span></div><span class="status '+(on?'ok':'no')+'">'+(on?(c[0]==='upload'?'사용 중':'연결됨'):'연결 필요')+'</span><button type="button" role="switch" aria-checked="'+on+'" aria-label="'+c[1]+' 연결" class="switch'+(on?' on':'')+'" data-conn="'+c[0]+'"><i></i></button></div>';
+  }).join('');
+  var alerts=[['d3','D-3 알림','필수 마감 3일 전에 알려요'],['d1','D-1 알림','전날 오후 6시에 알려요'],['morning','아침 요약','매일 오전 8시에 오늘 할 일을 정리해요']].map(function(c){
+    var on=!!S.alert[c[0]];
+    return '<div class="setrow" style="padding:12px 16px"><div style="flex:1;min-width:0;display:flex;flex-direction:column"><b style="font-size:14px">'+c[1]+'</b><span class="muted" style="font-size:13px">'+c[2]+'</span></div><button type="button" role="switch" aria-checked="'+on+'" aria-label="'+c[1]+'" class="switch'+(on?' on':'')+'" data-alert="'+c[0]+'"><i></i></button></div>';
+  }).join('');
+  var scopes=[['school','학교 계정 자료만'],['all','연결된 모든 자료']].map(function(c){return '<button type="button" class="chip'+(S.scope===c[0]?' on':'')+'" aria-pressed="'+(S.scope===c[0])+'" data-scope="'+c[0]+'">'+c[1]+'</button>';}).join('');
+  return '<div style="display:flex;flex-direction:column;gap:18px;max-width:820px"><section style="display:flex;flex-direction:column;gap:6px"><h1>연결 및 설정</h1><p class="muted">어디서 자료를 가져올지, AI가 무엇까지 읽을지 정해요. 연결을 끄면 그 출처의 자료는 분석하지 않아요.</p></section>'+
+   '<section class="box" style="overflow:hidden">'+conns+'</section>'+
+   '<section class="box" style="overflow:hidden"><div style="padding:16px 16px 4px;font-weight:700">알림</div>'+alerts+'</section>'+
+   '<section class="box pad" style="padding:16px"><b>AI 분석 범위</b><div class="row" role="group" aria-label="AI 분석 범위">'+scopes+'</div><span class="muted" style="font-size:13px">'+(S.scope==='school'?'개인 메일·폴더는 읽지 않아요. 학교 계정에서 온 자료만 분석해요.':'연결된 모든 계정의 자료를 분석해요. 개인 메일도 포함돼요.')+'</span></section></div>';
+}
+
+function panel(){
+  var el=document.getElementById('panel');
+  if(!S.sel){el.innerHTML='';return;}
+  var x=D.filter(function(d){return d.id===S.sel;})[0];
+  el.innerHTML='<div class="backdrop" data-close="1"></div><aside class="panel" aria-label="AI 판단 근거">'+
+   '<div class="row" style="justify-content:space-between"><span class="badge '+bc(x.d)+'">D-'+x.d+'</span><button type="button" class="x" aria-label="닫기" data-close="1">×</button></div>'+
+   '<h2 style="font-size:21px;line-height:1.35">'+esc(x.title)+'</h2><div style="font-size:14px;color:#3F424B">'+x.srcLabel+' · '+esc(x.from)+' · '+x.recv+' 수신</div>'+
+   '<div style="border:1px solid #E4E2DA;border-radius:10px;overflow:hidden"><div style="padding:10px 14px;background:#F5F4EF;font-size:12px;font-weight:600;color:#5B5F6B">AI가 뽑아낸 정보</div><div class="info">'+
+   '<span class="muted">마감</span><b>'+x.due+'</b><span class="muted">제출 방법</span><span>'+x.how+'</span><span class="muted">구분</span><span>'+(x.req?'필수 제출':'선택')+'</span><span class="muted">분류</span><span>'+x.cat+'</span>'+
+   '<span class="muted">신뢰도</span><span style="display:flex;align-items:center;gap:10px"><span class="bar" style="flex:1"><i style="width:'+x.conf+'%;background:'+(x.conf<80?'#C77700':'#2F4BD8')+'"></i></span><b class="mono">'+x.conf+'%</b></span></div></div>'+
+   '<div style="display:flex;flex-direction:column;gap:8px"><small class="muted" style="font-weight:600">원문에서 찾은 문장</small><div class="quote" style="line-height:1.7">…'+x.pre+'<mark>'+x.hl+'</mark>'+x.post+'…</div></div>'+
+   (x.low?'<div class="warn">메일 발송일(10월 1일) 기준으로 “다음 주 금요일”을 10월 9일로 계산했어요. 날짜가 다르면 아래에서 고쳐 주세요.</div>':'')+
+   '<div class="row" style="margin-top:auto"><a class="btn-dark" style="flex:1 1 140px;justify-content:center;min-height:44px" href="#" onclick="return false">원문 확인 ↗</a><button type="button" class="btn" style="flex:1 1 140px;min-height:44px" data-close="1">마감일 수정</button><button type="button" class="link" style="flex:1 1 100%;color:#5B5F6B;font-weight:400" data-close="1">마감이 아니에요 · 목록에서 빼기</button></div></aside>';
+}
+
+/* ---------- 온보딩 ---------- */
+var SCAN = [['Gmail 학교 메일 확인','41건'],['Google Drive 문서 확인','12건'],['마감일 찾는 중','5건'],['할 일 후보 정리','2건']];
+function onboard(){
+  var head='<div class="steps"><i class="on"></i><i class="'+(S.onb===2?'on':'')+'"></i></div>';
+  if(S.onb===1){
+    var conns=[['gmail','Gmail (학교 메일)','과제·공지 메일에서 마감일을 찾아요'],['drive','Google Drive','공모전 안내 PDF, 과제 문서를 읽어요'],['eclass','e-Class','과목 공지와 과제 게시판을 가져와요']].map(function(c){
+      var on=!!S.conn[c[0]];
+      return '<div class="setrow"><div style="flex:1 1 240px;min-width:0;display:flex;flex-direction:column"><b>'+c[1]+'</b><span class="muted" style="font-size:13px">'+c[2]+'</span></div><button type="button" role="switch" aria-checked="'+on+'" aria-label="'+c[1]+' 연결" class="switch'+(on?' on':'')+'" data-conn="'+c[0]+'"><i></i></button></div>';
+    }).join('');
+    var any=S.conn.gmail||S.conn.drive||S.conn.eclass;
+    return '<div class="onb">'+head+'<section style="display:flex;flex-direction:column;gap:8px"><span class="mono muted" style="font-size:13px">1 / 2 · 연결하기</span><h1 style="font-size:30px">흩어진 과제 마감, 한곳에 모아드릴게요</h1><p class="muted">자료를 가져올 곳을 골라 주세요. 연결한 곳에서만 마감일과 할 일을 찾아요.</p></section>'+
+     '<section class="box" style="overflow:hidden">'+conns+'</section>'+
+     '<div class="warn" style="background:#EEF1FC;color:#1F35A8">🔒 기본값은 “학교 계정 자료만 분석”이에요. 개인 메일은 읽지 않고, 설정에서 언제든 바꾸거나 끌 수 있어요.</div>'+
+     '<div class="row"><button type="button" class="btn-big" data-onb="scan"'+(any?'':' disabled')+'>연결하고 분석 시작</button><button type="button" class="link" style="color:#5B5F6B" data-onb="skip">건너뛰고 둘러보기</button></div>'+
+     (any?'':'<span class="muted" style="font-size:13px">최소 한 곳은 연결해야 분석할 수 있어요.</span>')+'</div>';
+  }
+  var rows=SCAN.map(function(s,i){
+    var st=i<S.scan?'ok':i===S.scan?'run':'';
+    return '<div class="scan"><span class="st '+st+'">'+(st==='ok'?'✓':i+1)+'</span><span style="flex:1;'+(st?'':'color:#8A8D96')+'">'+s[0]+'</span><span class="mono muted" style="font-size:13px">'+(st==='ok'?s[1]:st==='run'?'확인 중…':'')+'</span></div>';
+  }).join('');
+  var done=S.scan>=SCAN.length;
+  return '<div class="onb">'+head+'<section style="display:flex;flex-direction:column;gap:8px"><span class="mono muted" style="font-size:13px">2 / 2 · 분석하기</span><h1 style="font-size:30px">'+(done?'정리를 끝냈어요':'자료를 읽고 있어요')+'</h1><p class="muted">'+(done?'마감 5건과 할 일 후보 2건을 찾았어요. 그중 1건은 날짜가 애매해서 확인이 필요해요.':'처음 한 번만 조금 걸려요. 이후에는 새 자료만 분석해요.')+'</p></section>'+
+   '<div class="bar" style="height:8px"><i style="width:'+Math.round(Math.min(S.scan,SCAN.length)/SCAN.length*100)+'%;transition:width .4s"></i></div>'+
+   '<section class="box" style="overflow:hidden">'+rows+'</section>'+
+   (done?'<button type="button" class="btn-big" style="align-self:flex-start" data-onb="finish">대시보드로 이동</button>':'')+'</div>';
+}
+function runScan(){
+  if(S.onb!==2||S.scan>=SCAN.length) return;
+  setTimeout(function(){ if(S.onb!==2) return; S.scan++; render(); runScan(); },800);
+}
+
+/* ---------- 검색 ---------- */
+var STOP=['언제까지야','언제까지','언제야','언제','까지','마감일','마감','뭐야','알려줘','있어','이번','이번주','주','좀','관련'];
+function tokens(q){
+  return q.replace(/[?？!.,]/g,' ').split(/\s+/).map(function(t){return t.replace(/(은|는|이|가|을|를|야|이야)$/,'');})
+    .filter(function(t){return t.length>=2 && STOP.indexOf(t)<0;});
+}
+function score(text,tk){var s=0;tk.forEach(function(t){if(text.indexOf(t)>=0)s++;});return s;}
+function search(){
+  var q=S.q.trim(), tk=tokens(q);
+  var ex=['생화학 과제 언제까지야?','이번 주 공모전 마감','장학금 서류','딥러닝 발표'].map(function(e){return '<button type="button" class="chip" data-q="'+e+'">'+e+'</button>';}).join('');
+  var hits=D.map(function(x){return {x:x,s:score(x.title+' '+x.cat+' '+x.srcLabel+' '+x.from,tk)};}).filter(function(h){return h.s>0;})
+    .sort(function(a,b){return b.s-a.s||a.x.d-b.x.d;});
+  var fhits=FILES.filter(function(f){return score(f.name+' '+f.cat+' '+f.sum,tk)>0;});
+  var html='<section style="display:flex;flex-direction:column;gap:6px"><span class="muted" style="font-size:13px">검색</span><h1>“'+esc(q)+'”</h1></section>';
+  if(!hits.length&&!fhits.length){
+    return html+'<div class="answer"><span class="ai">AI 답변</span><p>연결된 자료에서 관련 내용을 찾지 못했어요. 과목명이나 공모전 이름으로 다시 물어봐 주세요.</p></div><div class="row">'+ex+'</div>';
+  }
+  if(hits.length){
+    var x=hits[0].x;
+    html+='<div class="answer"><span class="ai">AI 답변</span><p style="font-size:18px;line-height:1.5"><b>'+esc(x.title)+'</b>은(는) <b>'+x.due.replace(' · 추정','')+'</b>까지예요. 제출은 '+x.how+'로 해요.'+(x.low?' (날짜는 추정)':'')+'</p>'+
+     '<div class="quote"><small>근거 · '+x.srcLabel+' · '+esc(x.from)+'</small>“'+x.pre+'<mark>'+x.hl+'</mark>'+x.post+'”</div>'+
+     (x.low?'<div class="warn">⚠ 원문이 “'+x.hl+'”라고만 써 있어서 날짜를 계산해 추정했어요. 원문을 꼭 확인해 주세요.</div>':'')+
+     '<div class="row"><span class="badge '+bc(x.d)+'">D-'+x.d+'</span><span class="muted" style="font-size:13px;flex:1">신뢰도 '+x.conf+'%</span><button type="button" class="btn" data-open="'+x.id+'">근거 자세히</button></div></div>';
+    if(hits.length>1){
+      html+='<section class="box pad" style="gap:4px"><h2 style="font-size:16px;margin-bottom:6px">함께 찾은 마감</h2>'+hits.slice(1).map(function(h){return '<button type="button" class="later" data-open="'+h.x.id+'"><span class="badge '+bc(h.x.d)+'" style="font-size:12px">D-'+h.x.d+'</span><span style="flex:1">'+esc(h.x.title)+'</span><span class="muted" style="font-size:13px">'+h.x.due+'</span></button>';}).join('')+'</section>';
+    }
+  }
+  if(fhits.length){
+    html+='<section class="box pad" style="gap:0"><h2 style="font-size:16px;margin-bottom:6px">관련 자료 '+fhits.length+'건</h2>'+fhits.map(function(f){return '<div class="row" style="padding:10px 0;border-top:1px solid #EFEDE6"><span style="flex:1 1 200px;font-weight:600">'+esc(f.name)+'</span><span class="muted" style="font-size:13px">'+srcNames[f.src]+' · '+f.sum+'</span></div>';}).join('')+'</section>';
+  }
+  return html+'<div style="display:flex;flex-direction:column;gap:8px"><span class="muted" style="font-size:13px">이렇게도 물어볼 수 있어요</span><div class="row">'+ex+'</div></div>';
+}
+
+/* ---------- 직접 업로드 ---------- */
+function upload(){
+  var el=document.getElementById('modal');
+  if(!S.up){el.innerHTML='';return;}
+  var body;
+  if(S.up==='pick'){
+    body='<h2>자료 직접 올리기</h2><p class="muted" style="font-size:14px">강의계획서, 공모전 안내문처럼 연결되지 않은 자료를 올리면 같은 방식으로 마감일을 찾아요.</p>'+
+     '<label class="drop"><b>여기로 파일을 끌어오거나 눌러서 선택</b><span class="muted" style="font-size:13px">PDF · DOCX · HWP · 이미지 (최대 20MB)</span><input id="file" type="file" style="display:none"></label>'+
+     '<button type="button" class="btn" data-up="sample">예시 파일로 해보기 (캡스톤_중간보고_안내.pdf)</button>';
+  } else if(S.up==='scan'){
+    body='<div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:32px 0;text-align:center"><div class="spin"></div><b>'+esc(S.upName)+'</b><span class="muted" style="font-size:14px">문서를 읽고 마감일과 할 일을 찾는 중이에요…</span></div>';
+  } else {
+    body='<div class="row" style="justify-content:space-between"><span class="ai">AI가 찾은 내용 · 저장 전 확인</span><span class="mono muted" style="font-size:12px">신뢰도 91%</span></div>'+
+     '<span class="muted" style="font-size:13px">'+esc(S.upName)+'</span>'+
+     '<div class="quote"><small>근거 문장 (2쪽)</small>“중간 보고서는 <mark>10월 19일(월) 오후 6시</mark>까지 지도교수에게 PDF로 제출한다.”</div>'+
+     '<label class="field">제목<input id="u-title" value="캡스톤 디자인 중간 보고서 제출"></label>'+
+     '<div class="row" style="align-items:flex-end"><label class="field" style="flex:1 1 180px">마감<input id="u-due" value="10월 19일 (월) 18:00"></label>'+
+     '<label class="field" style="flex:1 1 160px">분류<select id="u-cat"><option>대학교/과제</option><option>공모전/프로젝트</option><option>행정/장학</option><option>기타</option></select></label></div>'+
+     '<label class="row" style="font-size:14px"><input id="u-req" type="checkbox" checked style="width:18px;height:18px"> 필수 제출</label>'+
+     '<div class="sugg"><b style="font-size:14px">함께 찾은 할 일</b><label class="row" style="font-size:14px"><input id="u-extra" type="checkbox" checked style="width:18px;height:18px"> 지도교수 면담 일정 잡기 <span class="muted" style="font-size:13px">· “보고서 제출 전 1회 면담 권장”</span></label></div>'+
+     '<div class="row" style="justify-content:flex-end"><button type="button" class="btn" data-up="cancel">취소</button><button type="button" class="btn-primary" data-up="save">확인하고 저장</button></div>';
+  }
+  el.innerHTML='<div class="mback"><div class="modal" role="dialog" aria-modal="true" aria-label="직접 업로드">'+
+    (S.up!=='scan'&&S.up!=='preview'?'<div class="row" style="justify-content:flex-end;margin-bottom:-12px"><button type="button" class="x" aria-label="닫기" data-up="cancel">×</button></div>':'')+body+'</div></div>';
+  var f=document.getElementById('file');
+  if(f) f.addEventListener('change',function(){ if(f.files[0]) startScan(f.files[0].name); });
+}
+function startScan(name){
+  set({up:'scan',upName:name});
+  setTimeout(function(){ if(S.up==='scan') set({up:'preview'}); },1400);
+}
+function saveUpload(){
+  var title=document.getElementById('u-title').value||'제목 없음';
+  var due=document.getElementById('u-due').value;
+  var cat=document.getElementById('u-cat').value;
+  var req=document.getElementById('u-req').checked;
+  var extra=document.getElementById('u-extra').checked;
+  if(D.some(function(x){return x.id==='a6';})){ set({up:null}); toast('이미 저장된 자료예요'); return; }
+  D.push({id:'a6',d:13,title:title,req:req,srcLabel:'직접 업로드 · PDF',cat:cat,pre:'중간 보고서는 ',hl:'10월 19일(월) 오후 6시',post:'까지 지도교수에게 PDF로 제출한다.',due:due,how:'지도교수 이메일 (PDF)',conf:91,from:S.upName,recv:'10월 6일'});
+  D.sort(function(a,b){return a.d-b.d;});
+  FILES.unshift({name:S.upName,src:'upload',cat:cat,date:'10.06',sum:'중간 보고서 제출 요건, 면담 권장',d:13});
+  S.extra.push({id:'t8',title:title,d:13,origin:'업로드',meta:due});
+  if(extra) S.extra.push({id:'t9',title:'지도교수 면담 일정 잡기',d:10,origin:'AI 후보',meta:'보고서 제출 전'});
+  set({up:null});
+  toast('저장했어요 · 해야 할 일에 '+(extra?2:1)+'건 추가됨');
+}
+function toast(msg){
+  var t=document.getElementById('toast'); t.textContent=msg; t.classList.remove('hidden');
+  clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.add('hidden');},2600);
+}
+
+function render(){
+  var navEl=document.getElementById('nav');
+  if(S.onb){
+    navEl.style.display='none';
+    document.getElementById('main').innerHTML=onboard();
+    document.getElementById('panel').innerHTML='';
+    upload();
+    return;
+  }
+  navEl.style.display='';
+  renderNav();
+  var m=document.getElementById('main');
+  m.innerHTML = S.screen==='dash'?dash():S.screen==='files'?files():S.screen==='todo'?todo():S.screen==='search'?search():settings();
+  panel();
+  upload();
+}
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-go],[data-open],[data-close],[data-src],[data-done],[data-conn],[data-alert],[data-scope],[data-sugg],[data-onb],[data-reonb],[data-q],[data-upload],[data-up]');
+  if(!b) return;
+  var ds=b.dataset;
+  if(ds.onb){
+    if(ds.onb==='scan'){set({onb:2,scan:0});runScan();}
+    else set({onb:0,screen:'dash'});
+  }
+  else if(ds.reonb) set({onb:1,scan:0,sel:null});
+  else if(ds.q){document.getElementById('q').value=ds.q;set({screen:'search',q:ds.q,sel:null,onb:0});}
+  else if(ds.upload) set({up:'pick'});
+  else if(ds.up){
+    if(ds.up==='sample') startScan('캡스톤_중간보고_안내.pdf');
+    else if(ds.up==='save') saveUpload();
+    else set({up:null});
+  }
+  else if(ds.go) set({screen:ds.go,sel:null});
+  else if(ds.open) set({sel:ds.open});
+  else if(ds.close) set({sel:null});
+  else if(ds.src) set({src:ds.src});
+  else if(ds.done){S.done[ds.done]=!S.done[ds.done];render();}
+  else if(ds.conn){S.conn[ds.conn]=!S.conn[ds.conn];render();}
+  else if(ds.alert){S.alert[ds.alert]=!S.alert[ds.alert];render();}
+  else if(ds.scope) set({scope:ds.scope});
+  else if(ds.sugg){var p=ds.sugg.split(':');S.sugg[p[0]]=p[1];render();}
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ if(S.up&&S.up!=='scan') set({up:null}); else if(S.sel) set({sel:null}); }
+  if(e.key==='Enter'&&e.target.id==='q'){ var v=e.target.value.trim(); if(v) set({screen:'search',q:v,sel:null,onb:0}); }
+});
+render();
+</script>
+</body>
+</html>
